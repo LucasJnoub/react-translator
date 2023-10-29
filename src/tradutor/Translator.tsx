@@ -4,10 +4,10 @@ export default function Translator() {
 const [translation, setTranslation] = useState(''); 
 const [inputText, setInputText] = useState(''); 
 const [outputLang, setOutputLang] = useState('en'); 
-const rapidApiKey = import.meta.env.VITE_REACT_APP_API_KEY;
-const rapidApiHost = import.meta.env.VITE_REACT_APP_API_HOST;
-const url = import.meta.env.VITE_REACT_APP_BASE_URL;
-const queryParams = import.meta.env.VITE_REACT_APP_QUERY_PARAMS;
+const rapidApiKey = process.env_REACT_APP_API_KEY;
+const rapidApiHost = process.env_REACT_APP_API_HOST;
+const url = process.env_REACT_APP_BASE_URL;
+const queryParams = process.env_REACT_APP_QUERY_PARAMS;
 
     async function translate() {
       const headers = new Headers();
