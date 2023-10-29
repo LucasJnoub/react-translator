@@ -1,60 +1,56 @@
-import { useState } from 'react';
+import { useEffect, useState} from 'react';
 import './Translator.css';
 export default function Translator() {
 const [translation, setTranslation] = useState(''); 
 const [inputText, setInputText] = useState(''); 
 const [outputLang, setOutputLang] = useState('en'); 
-const rapidApiKey = process.env.REACT_APP_API_KEY;
-const rapidApiHost = process.env.REACT_APP_API_HOST;
-const url = process.env.REACT_APP_BASE_URL;
-const queryParams = process.env.REACT_APP_QUERY_PARAMS;
+const rapidApiKey = import.meta.env.VITE_REACT_APP_API_KEY;
+const rapidApiHost = import.meta.env.VITE_REACT_APP_API_HOST;
+const url = import.meta.env.VITE_REACT_APP_BASE_URL;
+const queryParams = import.meta.env.VITE_REACT_APP_QUERY_PARAMS;
 
-
-
-  
-  async function translate(inputText:string) {
-    const headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-    if (rapidApiKey) {
-      headers.append('X-RapidAPI-Key', rapidApiKey);
-    }
-    if (rapidApiHost) {
-      headers.append('X-RapidAPI-Host', rapidApiHost);
-    }
-    
-    const options: RequestInit = {
-      method: 'POST',
-      headers,
-      body: JSON.stringify([{ Text: inputText }])
-    };
-    
-    try {
+    async function translate() {
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/json');
+      if (rapidApiKey) {
+        headers.append('X-RapidAPI-Key', rapidApiKey);
+      }
+      if (rapidApiHost) {
+        headers.append('X-RapidAPI-Host', rapidApiHost);
+      }
+      
+      const options: RequestInit = {
+        method: 'POST',
+        headers,
+        body: JSON.stringify([{ Text: inputText }])
+      };
+      
+      try {
         const response = await fetch(`${url}${outputLang}${queryParams}`, options);
-      const data = await response.json();
-      const translatedText = data[0].translations[0].text;
-      setTranslation(translatedText); 
-    } catch (error) {
-      console.error(error);
+        const data = await response.json();
+        const translatedText = data[0].translations[0].text;
+        setTranslation(translatedText); 
+      } catch (error) {
+        console.error(error);
+      }
     }
-  }
 
-  const handleTranslate = () => {
-    translate(inputText);
-  };
-
-  return (
+    useEffect(() => {
+      translate();
+    },[inputText])
+      
+  
+      return (
     <>
       <section className="translator">
         <div className="row-wrapper">
           <div className="translator-container input-language">
             <div className="top-row">
-              <button className="btn btn-primary btn-translate" onClick={handleTranslate}>
-                Traduzir
-              </button>
+             
             </div>
             <form action="" className="input-form">
               <textarea
-                placeholder="Enter text (Any Language)"
+                placeholder="Insira um texto que deseja traduzir (Qualquer idioma)"
                 className="text-box"
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
