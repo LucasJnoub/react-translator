@@ -1,4 +1,4 @@
-import Translator from "./tradutor/Translator"
+import Translator from "./components/Translator"
 
 function App() {
  

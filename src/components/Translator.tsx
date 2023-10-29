@@ -37,7 +37,7 @@ const queryParams = process.env.REACT_APP_QUERY_PARAMS;
 
     useEffect(() => {
       translate();
-    },[inputText])
+    },[inputText, outputLang])
       
   
       return (
@@ -59,14 +59,13 @@ const queryParams = process.env.REACT_APP_QUERY_PARAMS;
          </div>
 
 
-
           <div className="translator-container output-lang">
             <div className="top-row">
               <select name="languages" id="languages" className="form-select form-select-sm" onChange={(e) => setOutputLang(e.target.value)}>
                 <option value="en">Inglês</option> 
                 <option value="es">Espanhol</option>
                 <option value="it">Italiano</option>
-                <option value="ja">Japão</option>
+                <option value="ja">Japonês</option>
                 <option value="ko">Coreano</option> 
                 <option value="zh">Chinês</option>
                 <option value="ru">Russo</option>
